@@ -12,6 +12,8 @@
 #ifndef AVM_H
 # define AVM_H
 
+# include <iostream>
+
 enum eOperandType
 {
 	Int8,
@@ -19,6 +21,6 @@ enum eOperandType
 	Int32,
 	Float,
 	Double
-}
+};
 
 #endif

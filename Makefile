@@ -11,14 +11,15 @@
 
 NAME		= avm
 CC			= g++
-FLAGS		= -Wall -Werror -Wextra
+FLAGS		= -Wall -Werror -Wextra -std=c++11
 LIBS		=
-INC			= -I inc -I IOperand -I Operand
+INC			= -I inc -I IOperand -I Operand -I Vm
 
 SRC			=	main.cpp \
+				Vm/Vm.cpp \
 
 DIR_OBJ		= .obj
-DIR_LIST	=
+DIR_LIST	= Vm
 
 OBJ			= $(addprefix $(DIR_OBJ)/, $(SRC:.cpp=.o))
 

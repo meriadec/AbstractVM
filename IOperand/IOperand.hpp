@@ -12,6 +12,9 @@
 #ifndef IOPERAND_CLASS
 # define IOPERAND_CLASS
 
+# include <string>
+# include "avm.hpp"
+
 class IOperand {
 
 	public:
