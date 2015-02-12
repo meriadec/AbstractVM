@@ -16,7 +16,7 @@
 
 enum eOperandType
 {
-	Int8,
+	Int8 = 1,
 	Int16,
 	Int32,
 	Float,

@@ -19,7 +19,7 @@ class Operand : public IOperand {
 
 	public:
 
-		Operand (std::string const & value, eOperandType type, int precision) : _str(value), _type(type), _precision(precision)
+		Operand (std::string const & value, eOperandType type) : _str(value), _type(type)
 		{
 		}
 
@@ -34,7 +34,7 @@ class Operand : public IOperand {
 
 		int getPrecision (void) const
 		{
-			return this->_precision;
+			return this->_type;
 		}
 
 		eOperandType getType (void) const
@@ -84,7 +84,6 @@ class Operand : public IOperand {
 
 		std::string						_str;
 		eOperandType					_type;
-		int								_precision;
 
 };
 
