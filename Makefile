@@ -13,7 +13,7 @@ NAME		= avm
 CC			= g++
 FLAGS		= -Wall -Werror -Wextra
 LIBS		=
-INC			= -I .
+INC			= -I inc -I IOperand -I Operand
 
 SRC			=	main.cpp \
 
