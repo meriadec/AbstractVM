@@ -23,7 +23,7 @@ class Operand : public IOperand {
 		{
 		}
 
-		~Operand (void)
+		virtual ~Operand (void)
 		{
 		}
 
