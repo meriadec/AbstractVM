@@ -15,6 +15,7 @@
 # include "IOperand.hpp"
 
 # include <list>
+# include <stdexcept>
 
 class Vm {
 
@@ -53,6 +54,7 @@ class Vm {
 		 * Assert the value at the top of the stack
 		 */
 		void assert (IOperand const * op) const;
+		void assert (eOperandType type, std::string const & value) const;
 
 		/**
 		 * Print the value at the top of the stack
@@ -82,6 +84,24 @@ class Vm {
 		IOperand const * createDouble	(std::string const & value) const;
 
 		std::list<IOperand const *>			_stack;
+
+		/**
+		 * Exceptions
+		 */
+
+		class NotEnoughElementsException : public std::exception {
+			virtual const char * what (void) const throw ()
+			{
+				return "not enough elements in stack";
+			}
+		};
+
+		class AssertFailedException : public std::exception {
+			virtual const char * what (void) const throw ()
+			{
+				return "assertion failed";
+			}
+		};
 
 };
 

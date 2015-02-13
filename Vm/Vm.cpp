@@ -77,6 +77,9 @@ Vm & Vm::single (void)
 	return vm;
 }
 
+/**
+ * Push
+ */
 void Vm::push (eOperandType type, std::string const & value)
 {
 	this->_stack.push_front(this->createOperand(type, value));
@@ -87,12 +90,18 @@ void Vm::push (IOperand const * op)
 	this->_stack.push_front(op);
 }
 
+/**
+ * Pop
+ */
 void Vm::pop (void)
 {
 	delete *(this->_stack.begin());
 	this->_stack.pop_front();
 }
 
+/**
+ * Dump
+ */
 void Vm::dump (void) const
 {
 	std::list<IOperand const *>::const_iterator it = this->_stack.begin();
@@ -102,14 +111,27 @@ void Vm::dump (void) const
 	}
 }
 
+/**
+ * Assert
+ */
 void Vm::assert (IOperand const * op) const
 {
 	IOperand const * top = *(this->_stack.begin());
 	if (top->getType() != op->getType() || top->toString() != op->toString()) {
-		throw std::exception();
+		throw Vm::AssertFailedException();
 	}
 }
 
+void Vm::assert (eOperandType type, std::string const & value) const
+{
+	IOperand const * tmp = this->createOperand(type, value);
+	this->assert(tmp);
+	delete tmp;
+}
+
+/**
+ * Print
+ */
 void Vm::print (void) const
 {
 	IOperand const * top = *(this->_stack.begin());
@@ -123,46 +145,69 @@ void Vm::print (void) const
 	delete tmp;
 }
 
+/**
+ * Exit
+ */
 void Vm::exit (void)
 {
 	std::cout << "Exiting this shit." << std::endl;
 }
 
+/**
+ * Operations
+ * ----------
+ */
+
+/**
+ * Add
+ */
 void Vm::add (void)
 {
-	if (this->_stack.size() < 2) { throw std::exception(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
 	this->push(*op1 + *op2);
 }
 
+/**
+ * Sub
+ */
 void Vm::sub (void)
 {
-	if (this->_stack.size() < 2) { throw std::exception(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
 	this->push(*op1 - *op2);
 }
 
+/**
+ * Mul
+ */
 void Vm::mul (void)
 {
-	if (this->_stack.size() < 2) { throw std::exception(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
 	this->push(*op1 * *op2);
 }
 
+/**
+ * Div
+ */
 void Vm::div (void)
 {
-	if (this->_stack.size() < 2) { throw std::exception(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
 	this->push(*op1 / *op2);
 }
 
+/**
+ * Mod
+ */
 void Vm::mod (void)
 {
-	if (this->_stack.size() < 2) { throw std::exception(); }
+	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
 	this->push(*op1 % *op2);
