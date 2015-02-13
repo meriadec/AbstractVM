@@ -11,6 +11,7 @@
 
 #include <map>
 #include "Vm.hpp"
+#include "Operand.hpp"
 
 Vm::Vm (void)
 {

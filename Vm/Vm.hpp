@@ -12,7 +12,7 @@
 #ifndef VM_CLASS
 # define VM_CLASS
 
-# include "Operand.hpp"
+# include "IOperand.hpp"
 
 class Vm {
 

@@ -12,7 +12,10 @@
 #ifndef OPERAND_CLASS
 # define OPERAND_CLASS
 
+# include "Vm.hpp"
 # include "IOperand.hpp"
+
+# include <sstream>
 
 template<typename T>
 class Operand : public IOperand {
@@ -44,26 +47,58 @@ class Operand : public IOperand {
 
 		IOperand const * operator+ (IOperand const & rhs) const
 		{
-			(void) rhs;
-			return NULL;
+			eOperandType		type;
+			double				d1;
+			double				d2;
+
+			this->_buildParams(rhs, type, d1, d2);
+
+			std::stringstream ss;
+			ss << (d1 + d2);
+
+			return this->_renderOperand(type, ss);
 		}
 
 		IOperand const * operator- (IOperand const & rhs) const
 		{
-			(void) rhs;
-			return NULL;
+			eOperandType		type;
+			double				d1;
+			double				d2;
+
+			this->_buildParams(rhs, type, d1, d2);
+
+			std::stringstream ss;
+			ss << (d1 - d2);
+
+			return this->_renderOperand(type, ss);
 		}
 
 		IOperand const * operator* (IOperand const & rhs) const
 		{
-			(void) rhs;
-			return NULL;
+			eOperandType		type;
+			double				d1;
+			double				d2;
+
+			this->_buildParams(rhs, type, d1, d2);
+
+			std::stringstream ss;
+			ss << (d1 - d2);
+
+			return this->_renderOperand(type, ss);
 		}
 
 		IOperand const * operator/ (IOperand const & rhs) const
 		{
-			(void) rhs;
-			return NULL;
+			eOperandType		type;
+			double				d1;
+			double				d2;
+
+			this->_buildParams(rhs, type, d1, d2);
+
+			std::stringstream ss;
+			ss << (d1 / d2);
+
+			return this->_renderOperand(type, ss);
 		}
 
 		IOperand const * operator% (IOperand const & rhs) const
@@ -81,6 +116,35 @@ class Operand : public IOperand {
 
 		Operand (void);
 		Operand (Operand const & ref);
+
+		void _buildParams (IOperand const & r2, eOperandType & type, double & d1, double & d2) const
+		{
+			std::stringstream ss1(this->toString());
+			ss1 >> d1;
+
+			std::stringstream ss2(r2.toString());
+			ss2 >> d2;
+
+			type = (this->getType() > r2.getType()) ? this->getType() : r2.getType();
+		}
+
+		IOperand const * _renderOperand (eOperandType & type, std::stringstream & ss) const
+		{
+			std::stringstream ss2;
+			if (type == Int8 || type == Int16 || type == Int32) {
+				int	tmp;
+				ss >> tmp;
+				ss2 << tmp;
+			}
+			else if (type == Float) {
+				float tmp;
+				ss >> tmp;
+				ss2 << tmp;
+			} else {
+				ss2 << ss.str();
+			}
+			return Vm::single().createOperand(type, ss2.str());
+		}
 
 		std::string						_str;
 		eOperandType					_type;
