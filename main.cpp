@@ -24,11 +24,11 @@ int main (void)
 
 	try {
 
-		IOperand const * test  = vm.createOperand(Int8, "220");
-		IOperand const * test2 = vm.createOperand(Int8, "22");
-		IOperand const * res   = (*test) / (*test2);
-
-		std::cout << "res = " << res->toString() << std::endl;
+		vm.push(Int8, "2");
+		vm.push(Int8, "2");
+		vm.push(Int8, "2");
+		vm.dump();
+		vm.pop();
 
 	}
 	catch (SyntaxException & e) {

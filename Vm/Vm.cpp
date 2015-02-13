@@ -95,6 +95,7 @@ void Vm::push (IOperand const * op)
  */
 void Vm::pop (void)
 {
+	if (this->_stack.size() == 0) { throw Vm::NotEnoughElementsException(); }
 	delete *(this->_stack.begin());
 	this->_stack.pop_front();
 }
