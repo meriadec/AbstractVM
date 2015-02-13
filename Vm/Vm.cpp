@@ -110,6 +110,24 @@ void Vm::assert (IOperand const * op) const
 	}
 }
 
+void Vm::print (void) const
+{
+	IOperand const * top = *(this->_stack.begin());
+	IOperand const * tmp = this->createOperand(Int8, top->toString());
+	this->assert(tmp);
+	int c;
+	std::stringstream ss;
+	ss << top->toString();
+	ss >> c;
+	std::cout << static_cast<char>(c) << std::endl;
+	delete tmp;
+}
+
+void Vm::exit (void)
+{
+	std::cout << "Exiting this shit." << std::endl;
+}
+
 void Vm::add (void)
 {
 	if (this->_stack.size() < 2) { throw std::exception(); }

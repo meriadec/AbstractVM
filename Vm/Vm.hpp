@@ -55,6 +55,16 @@ class Vm {
 		void assert (IOperand const * op) const;
 
 		/**
+		 * Print the value at the top of the stack
+		 */
+		void print (void) const;
+
+		/**
+		 * Exit the subprogram
+		 */
+		void exit (void);
+
+		/**
 		 * Operations
 		 */
 		void add (void);
