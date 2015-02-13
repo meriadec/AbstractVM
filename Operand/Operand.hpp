@@ -195,14 +195,14 @@ class Operand : public IOperand {
 		 * Exceptions
 		 */
 
-		class OverflowException : public std::exception {
+		class OverflowException : public ExecutionException {
 			virtual const char * what (void) const throw ()
 			{
 				return "operand overflow";
 			}
 		};
 
-		class UnderflowException : public std::exception {
+		class UnderflowException : public ExecutionException {
 			virtual const char * what (void) const throw ()
 			{
 				return "operand underflow";

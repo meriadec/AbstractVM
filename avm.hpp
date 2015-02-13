@@ -14,6 +14,13 @@
 
 # include <iostream>
 
+/**
+ * Exceptions
+ */
+
+class SyntaxException    : public std::exception {};
+class ExecutionException : public std::exception {};
+
 enum eOperandType
 {
 	Int8 = 1,

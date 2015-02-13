@@ -89,14 +89,14 @@ class Vm {
 		 * Exceptions
 		 */
 
-		class NotEnoughElementsException : public std::exception {
+		class NotEnoughElementsException : public ExecutionException {
 			virtual const char * what (void) const throw ()
 			{
 				return "not enough elements in stack";
 			}
 		};
 
-		class AssertFailedException : public std::exception {
+		class AssertFailedException : public ExecutionException {
 			virtual const char * what (void) const throw ()
 			{
 				return "assertion failed";

@@ -13,6 +13,11 @@
 #include "Vm.hpp"
 #include "avm.hpp"
 
+std::string getLine (void)
+{
+	return "Line 4: ";
+}
+
 int main (void)
 {
 	Vm vm = Vm::single();
@@ -25,8 +30,15 @@ int main (void)
 
 		std::cout << "res = " << res->toString() << std::endl;
 
-	} catch (std::exception & e) {
-		std::cout << "program fail because: " << e.what() << std::endl;
+	}
+	catch (SyntaxException & e) {
+		std::cout << "Syntax Error: " << getLine() << e.what() << std::endl;
+	}
+	catch (ExecutionException & e) {
+		std::cout << "Execution Error: " << getLine() << e.what() << std::endl;
+	}
+	catch (std::exception & e) {
+		std::cout << "Unknown Error: " << getLine() << e.what() << std::endl;
 	}
 
 	return (0);
