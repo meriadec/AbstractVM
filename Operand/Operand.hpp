@@ -22,6 +22,10 @@ class Operand : public IOperand {
 
 	public:
 
+		/**
+		 * Constructor / Destructor
+		 */
+
 		Operand (std::string const & value, eOperandType type) : _str(value), _type(type)
 		{
 		}
@@ -34,6 +38,10 @@ class Operand : public IOperand {
 		{
 			this->_str = ref.toString();
 		}
+
+		/**
+		 * Member functions
+		 */
 
 		int getPrecision (void) const
 		{
@@ -114,8 +122,16 @@ class Operand : public IOperand {
 
 	private:
 
+		/**
+		 * Private constructors
+		 */
+
 		Operand (void);
 		Operand (Operand const & ref);
+
+		/**
+		 * Private member functions
+		 */
 
 		void _buildParams (IOperand const & r2, eOperandType & type, double & d1, double & d2) const
 		{
@@ -145,6 +161,10 @@ class Operand : public IOperand {
 			}
 			return Vm::single().createOperand(type, ss2.str());
 		}
+
+		/**
+		 * Attributes
+		 */
 
 		std::string						_str;
 		eOperandType					_type;
