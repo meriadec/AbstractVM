@@ -9,9 +9,11 @@
 /*                                                                            */
 /* ========================================================================== */
 
-#include <map>
 #include "Vm.hpp"
 #include "Operand.hpp"
+
+#include <map>
+#include <iterator>
 
 Vm::Vm (void)
 {
@@ -73,4 +75,69 @@ Vm & Vm::single (void)
 {
 	static Vm vm;
 	return vm;
+}
+
+void Vm::push (eOperandType type, std::string const & value)
+{
+	this->_stack.push_front(this->createOperand(type, value));
+}
+
+void Vm::push (IOperand const * op)
+{
+	this->_stack.push_front(op);
+}
+
+void Vm::pop (void)
+{
+	delete *(this->_stack.begin());
+	this->_stack.pop_front();
+}
+
+void Vm::dump (void) const
+{
+	std::list<IOperand const *>::const_iterator it = this->_stack.begin();
+	while (it != this->_stack.end()) {
+		std::cout << (*it)->toString() << std::endl;
+		++it;
+	}
+}
+
+void Vm::add (void)
+{
+	if (this->_stack.size() < 2) { throw std::exception(); }
+	IOperand const * op1 = *(this->_stack.begin());
+	IOperand const * op2 = *(std::next(this->_stack.begin()));
+	this->push(*op1 + *op2);
+}
+
+void Vm::sub (void)
+{
+	if (this->_stack.size() < 2) { throw std::exception(); }
+	IOperand const * op1 = *(this->_stack.begin());
+	IOperand const * op2 = *(std::next(this->_stack.begin()));
+	this->push(*op1 - *op2);
+}
+
+void Vm::mul (void)
+{
+	if (this->_stack.size() < 2) { throw std::exception(); }
+	IOperand const * op1 = *(this->_stack.begin());
+	IOperand const * op2 = *(std::next(this->_stack.begin()));
+	this->push(*op1 * *op2);
+}
+
+void Vm::div (void)
+{
+	if (this->_stack.size() < 2) { throw std::exception(); }
+	IOperand const * op1 = *(this->_stack.begin());
+	IOperand const * op2 = *(std::next(this->_stack.begin()));
+	this->push(*op1 / *op2);
+}
+
+void Vm::mod (void)
+{
+	if (this->_stack.size() < 2) { throw std::exception(); }
+	IOperand const * op1 = *(this->_stack.begin());
+	IOperand const * op2 = *(std::next(this->_stack.begin()));
+	this->push(*op1 % *op2);
 }
