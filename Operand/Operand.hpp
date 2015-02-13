@@ -17,6 +17,7 @@
 
 # include <sstream>
 # include <cstdint>
+# include <math.h>
 
 template<typename T>
 class Operand : public IOperand {
@@ -124,8 +125,16 @@ class Operand : public IOperand {
 
 		IOperand const * operator% (IOperand const & rhs) const
 		{
-			(void) rhs;
-			return NULL;
+			eOperandType		type;
+			double				d1;
+			double				d2;
+
+			this->_buildParams(rhs, type, d1, d2);
+
+			std::stringstream ss;
+			ss << fmod(d1, d2);
+
+			return this->_renderOperand(type, ss);
 		}
 
 		std::string const & toString (void) const
