@@ -16,8 +16,19 @@ Vm::Vm (void)
 {
 }
 
+Vm::Vm (Vm const & ref)
+{
+	*this = ref;
+}
+
 Vm::~Vm (void)
 {
+}
+
+Vm & Vm::operator= (Vm const & ref)
+{
+	static_cast<void>(ref);
+	return *this;
 }
 
 IOperand const * Vm::createInt8 (std::string const & value) const
@@ -55,4 +66,10 @@ IOperand const * Vm::createOperand (eOperandType type, std::string const & value
 		{ Double, &Vm::createDouble }
 	};
 	return (this->*(m[type]))(value);
+}
+
+Vm & Vm::single (void)
+{
+	static Vm vm;
+	return vm;
 }

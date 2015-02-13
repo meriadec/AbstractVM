@@ -18,8 +18,13 @@ class Vm {
 
 	public:
 
-		Vm (void);
-		~Vm (void);
+		static Vm & single (void);
+
+		Vm	(void);
+		Vm	(Vm const & ref);
+		~Vm	(void);
+
+		Vm & operator= (Vm const & ref);
 
 		/**
 		 * Factory method for create new operand
@@ -27,9 +32,6 @@ class Vm {
 		IOperand const * createOperand (eOperandType type, std::string const & value) const;
 
 	private:
-
-		Vm (Vm const & ref);
-		Vm & operator= (Vm const & ref);
 
 		IOperand const * createInt8		(std::string const & value) const;
 		IOperand const * createInt16	(std::string const & value) const;

@@ -13,20 +13,9 @@
 #include "Vm.hpp"
 #include "avm.hpp"
 
-Vm * ft_getVm (void)
-{
-	static Vm * out = NULL;
-
-	if (!out) {
-		out = new Vm();
-	}
-
-	return out;
-}
-
 int main (void)
 {
-	Vm vm;
+	Vm vm = Vm::single();
 
 	IOperand const * test  = vm.createOperand(Int8, "20");
 	IOperand const * test2 = vm.createOperand(Int16, "22");
