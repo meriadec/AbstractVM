@@ -16,6 +16,7 @@
 # include "IOperand.hpp"
 
 # include <sstream>
+# include <cstdint>
 
 template<typename T>
 class Operand : public IOperand {
@@ -28,6 +29,18 @@ class Operand : public IOperand {
 
 		Operand (std::string const & value, eOperandType type) : _str(value), _type(type)
 		{
+			double				d;
+			std::stringstream	ss;
+
+			ss << value;
+			ss >> d;
+
+			if (type == Int8) {
+				if (d > 128) { throw Operand::OverflowException(); }
+				if (d < 128) { throw Operand::UnderflowException(); }
+			}
+			else if (d > std::numeric_limits<T>::max()) { throw Operand::OverflowException(); }
+			else if (d < std::numeric_limits<T>::lowest()) { throw Operand::UnderflowException(); }
 		}
 
 		virtual ~Operand (void)
@@ -168,6 +181,24 @@ class Operand : public IOperand {
 
 		std::string						_str;
 		eOperandType					_type;
+
+		/**
+		 * Exceptions
+		 */
+
+		class OverflowException : public std::exception {
+			virtual const char * what (void) const throw ()
+			{
+				return "operand overflow";
+			}
+		};
+
+		class UnderflowException : public std::exception {
+			virtual const char * what (void) const throw ()
+			{
+				return "operand underflow";
+			}
+		};
 
 };
 
