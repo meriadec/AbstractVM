@@ -13,7 +13,7 @@ NAME		= avm
 CC			= g++
 FLAGS		= -Wall -Werror -Wextra -std=c++11
 LIBS		=
-INC			= -I inc -I IOperand -I Operand -I Vm
+INC			= -I . -I IOperand -I Operand -I Vm
 
 SRC			=	main.cpp \
 				Vm/Vm.cpp \
@@ -25,7 +25,7 @@ OBJ			= $(addprefix $(DIR_OBJ)/, $(SRC:.cpp=.o))
 
 all: $(NAME)
 
-$(addprefix $(DIR_OBJ)/, %.o): %.cpp **/*.hpp
+$(addprefix $(DIR_OBJ)/, %.o): %.cpp **/*.hpp *.hpp
 	@printf "compiling \e[33m%-41s\e[0m" "$@..."
 	@$(CC) $(FLAGS) $(INC) -o $@ -c $<
 	@printf "\e[32m[✔]\e[0m\n"
