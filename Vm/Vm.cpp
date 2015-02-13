@@ -102,6 +102,14 @@ void Vm::dump (void) const
 	}
 }
 
+void Vm::assert (IOperand const * op) const
+{
+	IOperand const * top = *(this->_stack.begin());
+	if (top->getType() != op->getType() || top->toString() != op->toString()) {
+		throw std::exception();
+	}
+}
+
 void Vm::add (void)
 {
 	if (this->_stack.size() < 2) { throw std::exception(); }

@@ -50,6 +50,11 @@ class Vm {
 		void dump (void) const;
 
 		/**
+		 * Assert the value at the top of the stack
+		 */
+		void assert (IOperand const * op) const;
+
+		/**
 		 * Operations
 		 */
 		void add (void);
