@@ -103,7 +103,7 @@ class Operand : public IOperand {
 			this->_buildParams(rhs, type, d1, d2);
 
 			std::stringstream ss;
-			ss << (d1 - d2);
+			ss << (d1 * d2);
 
 			return this->_renderOperand(type, ss);
 		}
