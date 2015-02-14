@@ -18,6 +18,7 @@ INC			= -I . -I IOperand -I Operand -I Vm -I Instruction -I Parser
 SRC			=	main.cpp \
 				Vm/Vm.cpp \
 				Parser/Parser.cpp \
+				Instruction/Instruction.cpp \
 
 DIR_OBJ		= .obj
 DIR_LIST	= Vm Instruction Parser

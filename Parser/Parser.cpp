@@ -72,10 +72,12 @@ void Parser::acquireLine (std::string & l) const
 		{ "assert",	&Vm::assert }
 	};
 
-	std::string token = l.substr(0, l.find(" "));
+	int			del		= l.find(" ");
+	std::string	token	= l.substr(0, del);
 
 	if (basicInstr[token]) {
-		std::cout << "token [" << token << "]" << std::endl;
+		if (del != -1) { throw Parser::BadInstructionException(); }
+		Vm::single().pushInstruction(basicInstr[token]);
 	}
 	else if (complexInstr[token]) {
 		std::cout << "complex token [" << token << "]" << std::endl;

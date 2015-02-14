@@ -245,3 +245,12 @@ void Vm::showInstructions (void) const
 		++it;
 	}
 }
+
+/**
+ * Push instruction
+ */
+void Vm::pushInstruction (basicInType fn)
+{
+	Instruction const * inst = new Instruction(fn);
+	this->_instructions.push_back(inst);
+}

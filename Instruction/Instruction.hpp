@@ -12,17 +12,24 @@
 #ifndef INSTRUCTION_CLASS
 # define INSTRUCTION_CLASS
 
+# include "avm.hpp"
+
 class Instruction {
 
 	public:
 
-		Instruction (void);
-		Instruction (Instruction const & ref);
-		~Instruction (void);
-
-		Instruction & operator= (Instruction const & ref);
+		Instruction		(basicInType);
+		~Instruction	(void);
 
 	private:
+
+		Instruction (void);
+		Instruction (Instruction const & ref);
+		Instruction & operator= (Instruction const & ref);
+
+		basicInType				_basicIn;
+		complexInType			_complexIn;
+		std::string				_param;
 
 };
 

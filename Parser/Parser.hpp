@@ -58,6 +58,13 @@ class Parser {
 			}
 		};
 
+		class BadInstructionException : public SyntaxException {
+			virtual const char * what (void) const throw ()
+			{
+				return "instruction bad format";
+			}
+		};
+
 		/**
 		 * Parsing
 		 */

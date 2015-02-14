@@ -11,21 +11,10 @@
 
 #include "Instruction.hpp"
 
-Instruction::Instruction (void)
+Instruction::Instruction (basicInType fn): _basicIn(fn), _complexIn(NULL)
 {
-}
-
-Instruction::Instruction (Instruction const & ref)
-{
-	*this = ref;
 }
 
 Instruction::~Instruction (void)
 {
-}
-
-Instruction & Instruction::operator= (Instruction const & ref)
-{
-	(void) ref;
-	return *this;
 }

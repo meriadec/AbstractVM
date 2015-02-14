@@ -30,4 +30,11 @@ enum eOperandType
 	Double
 };
 
+class IOperand;
+class Vm;
+
+typedef IOperand const * (Vm:: * fType)(std::string const & value) const;
+typedef void (Vm:: * basicInType)(void);
+typedef void (Vm:: * complexInType)(IOperand const * op);
+
 #endif

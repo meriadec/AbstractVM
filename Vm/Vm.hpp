@@ -14,6 +14,7 @@
 
 # include "IOperand.hpp"
 # include "Instruction.hpp"
+# include "avm.hpp"
 
 # include <list>
 # include <stdexcept>
@@ -101,6 +102,11 @@ class Vm {
 		void div (void);
 		void mod (void);
 
+		/**
+		 * Push instruction
+		 */
+		void pushInstruction (basicInType);
+
 	private:
 
 		IOperand const * createInt8		(std::string const & value) const;
@@ -132,9 +138,5 @@ class Vm {
 		};
 
 };
-
-typedef IOperand const * (Vm:: * fType)(std::string const & value) const;
-typedef void (Vm:: * basicInType)(void);
-typedef void (Vm:: * complexInType)(IOperand const * op);
 
 #endif
