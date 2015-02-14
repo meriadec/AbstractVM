@@ -36,6 +36,7 @@ Vm & Vm::operator= (Vm const & ref)
 
 void Vm::execute (void)
 {
+	this->resetLine();
 	std::list<Instruction const *>::const_iterator it = this->_instructions.begin();
 	while (it != this->_instructions.end()) {
 		Instruction const * inst = *it;
@@ -46,6 +47,7 @@ void Vm::execute (void)
 			IOperand const * op = this->createOperand(inst->type, inst->param);
 			(this->*(inst->complexIn))(op);
 		}
+		this->incLine();
 		++it;
 	}
 }
@@ -198,7 +200,10 @@ void Vm::add (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	this->push(*op1 + *op2);
+	IOperand const * res = *op1 + *op2;
+	this->pop();
+	this->pop();
+	this->push(res);
 }
 
 /**
@@ -209,7 +214,10 @@ void Vm::sub (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	this->push(*op1 - *op2);
+	IOperand const * res = *op1 - *op2;
+	this->pop();
+	this->pop();
+	this->push(res);
 }
 
 /**
@@ -220,7 +228,10 @@ void Vm::mul (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	this->push(*op1 * *op2);
+	IOperand const * res = *op1 * *op2;
+	this->pop();
+	this->pop();
+	this->push(res);
 }
 
 /**
@@ -231,7 +242,10 @@ void Vm::div (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	this->push(*op1 / *op2);
+	IOperand const * res = *op1 / *op2;
+	this->pop();
+	this->pop();
+	this->push(res);
 }
 
 /**
@@ -242,7 +256,10 @@ void Vm::mod (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	this->push(*op1 % *op2);
+	IOperand const * res = *op1 % *op2;
+	this->pop();
+	this->pop();
+	this->push(res);
 }
 
 /**
