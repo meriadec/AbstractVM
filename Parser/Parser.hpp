@@ -13,6 +13,7 @@
 # define PARSER_CLASS
 
 # include "avm.hpp"
+# include "Vm.hpp"
 
 # include <iostream>
 # include <string>
@@ -30,10 +31,11 @@ class Parser {
 		template<typename T>
 		void parse (T & stream) const
 		{
-			std::string line;
+			std::string		line;
 
 			while (getline(stream, line) && line != ";;") {
 				this->acquireLine(line);
+				Vm::single().incLine();
 			}
 		}
 
@@ -46,6 +48,13 @@ class Parser {
 			virtual const char * what (void) const throw ()
 			{
 				return "bad input file";
+			}
+		};
+
+		class UnknownInstructionException : public SyntaxException {
+			virtual const char * what (void) const throw ()
+			{
+				return "unknown instruction";
 			}
 		};
 

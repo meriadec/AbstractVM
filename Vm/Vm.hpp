@@ -13,6 +13,7 @@
 # define VM_CLASS
 
 # include "IOperand.hpp"
+# include "Instruction.hpp"
 
 # include <list>
 # include <stdexcept>
@@ -33,6 +34,21 @@ class Vm {
 		 * Get current line
 		 */
 		unsigned int getLine (void) const;
+
+		/**
+		 * Increment current line
+		 */
+		void incLine (void);
+
+		/**
+		 * Reset current line
+		 */
+		void resetLine (void);
+
+		/**
+		 * Debug instructions
+		 */
+		void showInstructions (void) const;
 
 		/**
 		 * Execute the program
@@ -58,18 +74,18 @@ class Vm {
 		/**
 		 * Show all elements of the stack
 		 */
-		void dump (void) const;
+		void dump (void);
 
 		/**
 		 * Assert the value at the top of the stack
 		 */
-		void assert (IOperand const * op) const;
-		void assert (eOperandType type, std::string const & value) const;
+		void assert (IOperand const * op);
+		void assert (eOperandType type, std::string const & value);
 
 		/**
 		 * Print the value at the top of the stack
 		 */
-		void print (void) const;
+		void print (void);
 
 		/**
 		 * Exit the subprogram
@@ -94,6 +110,7 @@ class Vm {
 		IOperand const * createDouble	(std::string const & value) const;
 
 		std::list<IOperand const *>			_stack;
+		std::list<Instruction const *>		_instructions;
 		unsigned int						_line;
 
 		/**
@@ -117,5 +134,7 @@ class Vm {
 };
 
 typedef IOperand const * (Vm:: * fType)(std::string const & value) const;
+typedef void (Vm:: * basicInType)(void);
+typedef void (Vm:: * complexInType)(IOperand const * op);
 
 #endif

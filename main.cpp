@@ -32,7 +32,7 @@ void display_err (std::string type, std::exception & e, bool line)
 
 int main (int ac, char ** av)
 {
-	Vm 		vm = Vm::single();
+	Vm &	vm = Vm::single();
 	Parser	parser;
 
 	if (ac > 2) {
@@ -41,13 +41,16 @@ int main (int ac, char ** av)
 
 	try {
 
+		vm.resetLine();
+
 		if (ac == 1) {
 			parser.parseFromStdin();
 		} else {
 			parser.parseFromFile(av[1]);
 		}
 
-		vm.execute();
+		vm.showInstructions();
+		//vm.execute();
 
 	}
 	catch (SyntaxException & e)    { display_err("Syntax Error", e, true); }

@@ -10,8 +10,11 @@
 /* ========================================================================== */
 
 #include "Parser.hpp"
+
+#include <map>
 #include <iostream>
 #include <fstream>
+#include <cstring>
 
 Parser::Parser (void)
 {
@@ -48,10 +51,36 @@ void Parser::parseFromFile (char * filename) const
 /**
  * Parsing one single line
  */
-void Parser::acquireLine (std::string & line) const
+void Parser::acquireLine (std::string & l) const
 {
-	if (this->isUseless(line)) { return; }
-	std::cout << line << std::endl;
+	if (this->isUseless(l)) { return; }
+
+	static std::map<std::string, basicInType> basicInstr = {
+		{ "pop",	&Vm::pop },
+		{ "dump",	&Vm::dump },
+		{ "add",	&Vm::add },
+		{ "sub",	&Vm::sub },
+		{ "mul",	&Vm::mul },
+		{ "div",	&Vm::div },
+		{ "mod",	&Vm::mod },
+		{ "print",	&Vm::print },
+		{ "exit",	&Vm::exit }
+	};
+
+	static std::map<std::string, complexInType> complexInstr = {
+		{ "push",	&Vm::push },
+		{ "assert",	&Vm::assert }
+	};
+
+	std::string token = l.substr(0, l.find(" "));
+
+	if (basicInstr[token]) {
+		std::cout << "token [" << token << "]" << std::endl;
+	}
+	else if (complexInstr[token]) {
+		std::cout << "complex token [" << token << "]" << std::endl;
+	}
+	else { throw Parser::UnknownInstructionException(); }
 }
 
 /**

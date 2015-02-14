@@ -15,7 +15,7 @@
 #include <map>
 #include <iterator>
 
-Vm::Vm (void): _line(0)
+Vm::Vm (void)
 {
 }
 
@@ -42,6 +42,16 @@ void Vm::execute (void)
 unsigned int Vm::getLine (void) const
 {
 	return this->_line;
+}
+
+void Vm::incLine (void)
+{
+	++(this->_line);
+}
+
+void Vm::resetLine (void)
+{
+	this->_line = 1;
 }
 
 IOperand const * Vm::createInt8 (std::string const & value) const
@@ -113,7 +123,7 @@ void Vm::pop (void)
 /**
  * Dump
  */
-void Vm::dump (void) const
+void Vm::dump (void)
 {
 	std::list<IOperand const *>::const_iterator it = this->_stack.begin();
 	while (it != this->_stack.end()) {
@@ -125,7 +135,7 @@ void Vm::dump (void) const
 /**
  * Assert
  */
-void Vm::assert (IOperand const * op) const
+void Vm::assert (IOperand const * op)
 {
 	IOperand const * top = *(this->_stack.begin());
 	if (top->getType() != op->getType() || top->toString() != op->toString()) {
@@ -133,7 +143,7 @@ void Vm::assert (IOperand const * op) const
 	}
 }
 
-void Vm::assert (eOperandType type, std::string const & value) const
+void Vm::assert (eOperandType type, std::string const & value)
 {
 	IOperand const * tmp = this->createOperand(type, value);
 	this->assert(tmp);
@@ -143,7 +153,7 @@ void Vm::assert (eOperandType type, std::string const & value) const
 /**
  * Print
  */
-void Vm::print (void) const
+void Vm::print (void)
 {
 	IOperand const * top = *(this->_stack.begin());
 	IOperand const * tmp = this->createOperand(Int8, top->toString());
@@ -222,4 +232,16 @@ void Vm::mod (void)
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
 	this->push(*op1 % *op2);
+}
+
+/**
+ * Debug instructions
+ */
+void Vm::showInstructions (void) const
+{
+	std::list<Instruction const *>::const_iterator it = this->_instructions.begin();
+	while (it != this->_instructions.end()) {
+		std::cout << "instruction" << std::endl;
+		++it;
+	}
 }
