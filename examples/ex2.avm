@@ -4,4 +4,3 @@ add
 assert int32(5)
 dump
 exit
-;;
