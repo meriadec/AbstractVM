@@ -47,11 +47,6 @@ class Vm {
 		void resetLine (void);
 
 		/**
-		 * Debug instructions
-		 */
-		void showInstructions (void) const;
-
-		/**
 		 * Execute the program
 		 */
 		void execute (void);
@@ -106,7 +101,7 @@ class Vm {
 		 * Push instruction
 		 */
 		void pushInstruction (basicInType);
-		void pushInstruction (complexInType, std::string);
+		void pushInstruction (eOperandType, complexInType, std::string);
 
 	private:
 

@@ -49,8 +49,8 @@ int main (int ac, char ** av)
 			parser.parseFromFile(av[1]);
 		}
 
-		vm.showInstructions();
-		//vm.execute();
+		//vm.debug();
+		vm.execute();
 
 	}
 	catch (SyntaxException & e)    { display_err("Syntax Error", e, true); }

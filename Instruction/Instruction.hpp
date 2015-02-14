@@ -19,18 +19,19 @@ class Instruction {
 	public:
 
 		Instruction		(basicInType);
-		Instruction		(complexInType fn, std::string param);
+		Instruction		(eOperandType type, complexInType fn, std::string param);
 		~Instruction	(void);
+
+		basicInType				basicIn;
+		complexInType			complexIn;
+		std::string				param;
+		eOperandType			type;
 
 	private:
 
 		Instruction (void);
 		Instruction (Instruction const & ref);
 		Instruction & operator= (Instruction const & ref);
-
-		basicInType				_basicIn;
-		complexInType			_complexIn;
-		std::string				_param;
 
 };
 

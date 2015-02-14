@@ -11,11 +11,11 @@
 
 #include "Instruction.hpp"
 
-Instruction::Instruction (basicInType fn): _basicIn(fn), _complexIn(NULL)
+Instruction::Instruction (basicInType fn): basicIn(fn), complexIn(NULL)
 {
 }
 
-Instruction::Instruction (complexInType fn, std::string param): _basicIn(NULL), _complexIn(fn), _param(param)
+Instruction::Instruction (eOperandType type, complexInType fn, std::string param): basicIn(NULL), complexIn(fn), param(param), type(type)
 {
 }
 

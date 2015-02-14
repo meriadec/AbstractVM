@@ -36,7 +36,18 @@ Vm & Vm::operator= (Vm const & ref)
 
 void Vm::execute (void)
 {
-	std::cout << "executing program..." << std::endl;
+	std::list<Instruction const *>::const_iterator it = this->_instructions.begin();
+	while (it != this->_instructions.end()) {
+		Instruction const * inst = *it;
+		if (inst->basicIn) {
+			(this->*(inst->basicIn))();
+		}
+		else {
+			IOperand const * op = this->createOperand(inst->type, inst->param);
+			(this->*(inst->complexIn))(op);
+		}
+		++it;
+	}
 }
 
 unsigned int Vm::getLine (void) const
@@ -235,18 +246,6 @@ void Vm::mod (void)
 }
 
 /**
- * Debug instructions
- */
-void Vm::showInstructions (void) const
-{
-	std::list<Instruction const *>::const_iterator it = this->_instructions.begin();
-	while (it != this->_instructions.end()) {
-		std::cout << "instruction" << std::endl;
-		++it;
-	}
-}
-
-/**
  * Push instruction
  */
 void Vm::pushInstruction (basicInType fn)
@@ -255,8 +254,8 @@ void Vm::pushInstruction (basicInType fn)
 	this->_instructions.push_back(inst);
 }
 
-void Vm::pushInstruction (complexInType fn, std::string param)
+void Vm::pushInstruction (eOperandType type, complexInType fn, std::string param)
 {
-	Instruction const * inst = new Instruction(fn, param);
+	Instruction const * inst = new Instruction(type, fn, param);
 	this->_instructions.push_back(inst);
 }

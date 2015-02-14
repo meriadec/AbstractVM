@@ -89,6 +89,7 @@ void Parser::acquireLine (std::string & l) const
 		Vm::single().pushInstruction(basicInstr[token]);
 	}
 	else if (complexInstr[token]) {
+		std::string instr = token;
 		if (del == -1) { throw Parser::BadInstructionException(); }
 		++del;
 		l.erase(0, del);
@@ -109,7 +110,7 @@ void Parser::acquireLine (std::string & l) const
 			throw Parser::BadInstructionException();
 		}
 
-		Vm::single().pushInstruction(complexInstr[type], token);
+		Vm::single().pushInstruction(types[type], complexInstr[instr], token);
 	}
 	else { throw Parser::UnknownInstructionException(); }
 }
