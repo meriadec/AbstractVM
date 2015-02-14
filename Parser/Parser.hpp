@@ -33,7 +33,7 @@ class Parser {
 			std::string line;
 
 			while (getline(stream, line) && line != ";;") {
-				std::cout << line << std::endl;
+				this->acquireLine(line);
 			}
 		}
 
@@ -48,6 +48,12 @@ class Parser {
 				return "bad input file";
 			}
 		};
+
+		/**
+		 * Parsing
+		 */
+		void	acquireLine		(std::string & line) const;
+		bool	isUseless		(std::string & line) const;
 
 };
 

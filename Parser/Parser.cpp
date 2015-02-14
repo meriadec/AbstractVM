@@ -44,3 +44,22 @@ void Parser::parseFromFile (char * filename) const
 	this->parse<std::ifstream>(file);
 	file.close();
 }
+
+/**
+ * Parsing one single line
+ */
+void Parser::acquireLine (std::string & line) const
+{
+	if (this->isUseless(line)) { return; }
+	std::cout << line << std::endl;
+}
+
+/**
+ * Test if line is useless
+ */
+bool Parser::isUseless (std::string & line) const
+{
+	if (line == "") { return true; }
+	if (line[0] == ';') { return true; }
+	return false;
+}
