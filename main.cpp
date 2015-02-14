@@ -49,7 +49,6 @@ int main (int ac, char ** av)
 			parser.parseFromFile(av[1]);
 		}
 
-		//vm.debug();
 		vm.execute();
 
 	}
