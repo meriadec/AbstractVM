@@ -30,6 +30,16 @@ class Vm {
 		Vm & operator= (Vm const & ref);
 
 		/**
+		 * Get current line
+		 */
+		unsigned int getLine (void) const;
+
+		/**
+		 * Execute the program
+		 */
+		void execute (void);
+
+		/**
 		 * Factory method for create new operand
 		 */
 		IOperand const * createOperand (eOperandType type, std::string const & value) const;
@@ -84,6 +94,7 @@ class Vm {
 		IOperand const * createDouble	(std::string const & value) const;
 
 		std::list<IOperand const *>			_stack;
+		unsigned int						_line;
 
 		/**
 		 * Exceptions

@@ -15,7 +15,7 @@
 #include <map>
 #include <iterator>
 
-Vm::Vm (void)
+Vm::Vm (void): _line(0)
 {
 }
 
@@ -32,6 +32,16 @@ Vm & Vm::operator= (Vm const & ref)
 {
 	static_cast<void>(ref);
 	return *this;
+}
+
+void Vm::execute (void)
+{
+	std::cout << "executing program..." << std::endl;
+}
+
+unsigned int Vm::getLine (void) const
+{
+	return this->_line;
 }
 
 IOperand const * Vm::createInt8 (std::string const & value) const

@@ -3,52 +3,43 @@
 /*    ██╗  ██╗██████╗   █████╗ ██╗   ██╗                                      */
 /*    ██║  ██║╚════██╗ ██╔══██╗██║   ██║                                      */
 /*    ███████║ █████╔╝ ███████║██║   ██║       by: mpillet                    */
-/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 12:34:46        */
+/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/14 12:24:38        */
 /*         ██║███████╗ ██║  ██║ ╚████╔╝                                       */
 /*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
 /*                                                                            */
 /* ========================================================================== */
 
-#include "Vm.hpp"
-#include "Parser.hpp"
-#include "avm.hpp"
+#ifndef PARSER_CLASS
+# define PARSER_CLASS
 
-#include <iostream>
+# include <iostream>
+# include <string>
 
-int usage (char * name)
-{
-	std::cout << "usage: " << name << " [file]" << std::endl;
-	return (1);
-}
+class Parser {
 
-void display_err (std::string type, std::exception & e)
-{
-	std::cout << type << ": " << "Line " << Vm::single().getLine() << ": " << e.what() << std::endl;
-}
+	public:
 
-int main (int ac, char ** av)
-{
-	Vm 		vm = Vm::single();
-	Parser	parser;
+		Parser (void);
+		Parser (Parser const & ref);
+		~Parser (void);
 
-	if (ac > 2) {
-		return usage(av[0]);
-	}
+		Parser & operator= (Parser const & ref);
 
-	try {
+		template<typename T>
+		void parse (T & stream) const
+		{
+			std::string line;
 
-		if (ac == 1) {
-			parser.parseFromStdin();
-		} else {
-			parser.parseFromFile(av[1]);
+			while (getline(stream, line) && line != ";;") {
+				std::cout << line << std::endl;
+			}
 		}
 
-		vm.execute();
+		void parseFromStdin	(void) const;
+		void parseFromFile	(char * file) const;
 
-	}
-	catch (SyntaxException & e)    { display_err("Syntax Error",    e); }
-	catch (ExecutionException & e) { display_err("Execution Error", e); }
-	catch (std::exception & e)     { display_err("Unknown Error",   e); }
+	private:
 
-	return (0);
-}
+};
+
+#endif

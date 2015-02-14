@@ -3,52 +3,44 @@
 /*    ██╗  ██╗██████╗   █████╗ ██╗   ██╗                                      */
 /*    ██║  ██║╚════██╗ ██╔══██╗██║   ██║                                      */
 /*    ███████║ █████╔╝ ███████║██║   ██║       by: mpillet                    */
-/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 12:34:46        */
+/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/14 12:24:38        */
 /*         ██║███████╗ ██║  ██║ ╚████╔╝                                       */
 /*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
 /*                                                                            */
 /* ========================================================================== */
 
-#include "Vm.hpp"
 #include "Parser.hpp"
-#include "avm.hpp"
-
 #include <iostream>
+#include <fstream>
 
-int usage (char * name)
+Parser::Parser (void)
 {
-	std::cout << "usage: " << name << " [file]" << std::endl;
-	return (1);
 }
 
-void display_err (std::string type, std::exception & e)
+Parser::Parser (Parser const & ref)
 {
-	std::cout << type << ": " << "Line " << Vm::single().getLine() << ": " << e.what() << std::endl;
+	*this = ref;
 }
 
-int main (int ac, char ** av)
+Parser::~Parser (void)
 {
-	Vm 		vm = Vm::single();
-	Parser	parser;
+}
 
-	if (ac > 2) {
-		return usage(av[0]);
-	}
+Parser & Parser::operator= (Parser const & ref)
+{
+	(void) ref;
+	return *this;
+}
 
-	try {
+void Parser::parseFromStdin (void) const
+{
+	this->parse<std::istream>(std::cin);
+}
 
-		if (ac == 1) {
-			parser.parseFromStdin();
-		} else {
-			parser.parseFromFile(av[1]);
-		}
-
-		vm.execute();
-
-	}
-	catch (SyntaxException & e)    { display_err("Syntax Error",    e); }
-	catch (ExecutionException & e) { display_err("Execution Error", e); }
-	catch (std::exception & e)     { display_err("Unknown Error",   e); }
-
-	return (0);
+void Parser::parseFromFile (char * filename) const
+{
+	std::ifstream file(filename);
+	if (!file.is_open()) { throw std::exception(); }
+	this->parse<std::ifstream>(file);
+	file.close();
 }

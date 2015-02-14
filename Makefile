@@ -13,13 +13,14 @@ NAME		= avm
 CC			= g++
 FLAGS		= -Wall -Werror -Wextra -std=c++11
 LIBS		=
-INC			= -I . -I IOperand -I Operand -I Vm
+INC			= -I . -I IOperand -I Operand -I Vm -I Instruction -I Parser
 
 SRC			=	main.cpp \
 				Vm/Vm.cpp \
+				Parser/Parser.cpp \
 
 DIR_OBJ		= .obj
-DIR_LIST	= Vm
+DIR_LIST	= Vm Instruction Parser
 
 OBJ			= $(addprefix $(DIR_OBJ)/, $(SRC:.cpp=.o))
 

@@ -3,52 +3,29 @@
 /*    ██╗  ██╗██████╗   █████╗ ██╗   ██╗                                      */
 /*    ██║  ██║╚════██╗ ██╔══██╗██║   ██║                                      */
 /*    ███████║ █████╔╝ ███████║██║   ██║       by: mpillet                    */
-/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/12 12:34:46        */
+/*    ╚════██║██╔═══╝  ██╔══██║╚██╗ ██╔╝       at: 2015/02/14 12:21:23        */
 /*         ██║███████╗ ██║  ██║ ╚████╔╝                                       */
 /*         ╚═╝╚══════╝ ╚═╝  ╚═╝  ╚═══╝                                        */
 /*                                                                            */
 /* ========================================================================== */
 
-#include "Vm.hpp"
-#include "Parser.hpp"
-#include "avm.hpp"
+#include "Instruction.hpp"
 
-#include <iostream>
-
-int usage (char * name)
+Instruction::Instruction (void)
 {
-	std::cout << "usage: " << name << " [file]" << std::endl;
-	return (1);
 }
 
-void display_err (std::string type, std::exception & e)
+Instruction::Instruction (Instruction const & ref)
 {
-	std::cout << type << ": " << "Line " << Vm::single().getLine() << ": " << e.what() << std::endl;
+	*this = ref;
 }
 
-int main (int ac, char ** av)
+Instruction::~Instruction (void)
 {
-	Vm 		vm = Vm::single();
-	Parser	parser;
+}
 
-	if (ac > 2) {
-		return usage(av[0]);
-	}
-
-	try {
-
-		if (ac == 1) {
-			parser.parseFromStdin();
-		} else {
-			parser.parseFromFile(av[1]);
-		}
-
-		vm.execute();
-
-	}
-	catch (SyntaxException & e)    { display_err("Syntax Error",    e); }
-	catch (ExecutionException & e) { display_err("Execution Error", e); }
-	catch (std::exception & e)     { display_err("Unknown Error",   e); }
-
-	return (0);
+Instruction & Instruction::operator= (Instruction const & ref)
+{
+	(void) ref;
+	return *this;
 }
