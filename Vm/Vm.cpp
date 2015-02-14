@@ -26,6 +26,12 @@ Vm::Vm (Vm const & ref)
 
 Vm::~Vm (void)
 {
+	for (std::list<IOperand const *>::iterator it = this->_stack.begin(); it != this->_stack.end(); it++) {
+		delete *it;
+	}
+	for (std::list<Instruction const *>::iterator it = this->_instructions.begin(); it != this->_instructions.end(); it++) {
+		delete *it;
+	}
 }
 
 Vm & Vm::operator= (Vm const & ref)
