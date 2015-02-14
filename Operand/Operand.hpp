@@ -117,6 +117,7 @@ class Operand : public IOperand {
 
 			this->_buildParams(rhs, type, d1, d2);
 
+			if (d2 == 0) { throw Operand::DivideByZeroException(); }
 			std::stringstream ss;
 			ss << (d1 / d2);
 
@@ -131,6 +132,7 @@ class Operand : public IOperand {
 
 			this->_buildParams(rhs, type, d1, d2);
 
+			if (d2 == 0) { throw Operand::ModByZeroException(); }
 			std::stringstream ss;
 			ss << fmod(d1, d2);
 
@@ -206,6 +208,20 @@ class Operand : public IOperand {
 			virtual const char * what (void) const throw ()
 			{
 				return "operand underflow";
+			}
+		};
+
+		class DivideByZeroException: public ExecutionException {
+			virtual const char * what (void) const throw ()
+			{
+				return "division by zero is forbidden";
+			}
+		};
+
+		class ModByZeroException: public ExecutionException {
+			virtual const char * what (void) const throw ()
+			{
+				return "modulo by zero is forbidden";
 			}
 		};
 
