@@ -40,7 +40,7 @@ void Parser::parseFromStdin (void) const
 void Parser::parseFromFile (char * filename) const
 {
 	std::ifstream file(filename);
-	if (!file.is_open()) { throw std::exception(); }
+	if (!file.is_open()) { throw Parser::BadFileException(); }
 	this->parse<std::ifstream>(file);
 	file.close();
 }

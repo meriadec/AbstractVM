@@ -21,9 +21,13 @@ int usage (char * name)
 	return (1);
 }
 
-void display_err (std::string type, std::exception & e)
+void display_err (std::string type, std::exception & e, bool line)
 {
-	std::cout << type << ": " << "Line " << Vm::single().getLine() << ": " << e.what() << std::endl;
+	std::cout << "\033[31m" << type << ": " << "\033[0m";
+	if (line) {
+		std::cout << "Line " << Vm::single().getLine() << ": ";
+	}
+	std::cout << e.what() << std::endl;
 }
 
 int main (int ac, char ** av)
@@ -46,9 +50,9 @@ int main (int ac, char ** av)
 		vm.execute();
 
 	}
-	catch (SyntaxException & e)    { display_err("Syntax Error",    e); }
-	catch (ExecutionException & e) { display_err("Execution Error", e); }
-	catch (std::exception & e)     { display_err("Unknown Error",   e); }
+	catch (SyntaxException & e)    { display_err("Syntax Error", e, true); }
+	catch (ExecutionException & e) { display_err("Execution Error", e, true); }
+	catch (std::exception & e)     { display_err("Error", e, false); }
 
 	return (0);
 }

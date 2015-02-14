@@ -12,6 +12,8 @@
 #ifndef PARSER_CLASS
 # define PARSER_CLASS
 
+# include "avm.hpp"
+
 # include <iostream>
 # include <string>
 
@@ -39,6 +41,13 @@ class Parser {
 		void parseFromFile	(char * file) const;
 
 	private:
+
+		class BadFileException : public std::exception {
+			virtual const char * what (void) const throw ()
+			{
+				return "bad input file";
+			}
+		};
 
 };
 
