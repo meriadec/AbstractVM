@@ -254,3 +254,9 @@ void Vm::pushInstruction (basicInType fn)
 	Instruction const * inst = new Instruction(fn);
 	this->_instructions.push_back(inst);
 }
+
+void Vm::pushInstruction (complexInType fn, std::string param)
+{
+	Instruction const * inst = new Instruction(fn, param);
+	this->_instructions.push_back(inst);
+}

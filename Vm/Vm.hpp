@@ -106,6 +106,7 @@ class Vm {
 		 * Push instruction
 		 */
 		void pushInstruction (basicInType);
+		void pushInstruction (complexInType, std::string);
 
 	private:
 

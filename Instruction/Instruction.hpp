@@ -19,6 +19,7 @@ class Instruction {
 	public:
 
 		Instruction		(basicInType);
+		Instruction		(complexInType fn, std::string param);
 		~Instruction	(void);
 
 	private:

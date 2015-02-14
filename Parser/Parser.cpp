@@ -15,6 +15,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
+#include <regex>
 
 Parser::Parser (void)
 {
@@ -72,6 +73,14 @@ void Parser::acquireLine (std::string & l) const
 		{ "assert",	&Vm::assert }
 	};
 
+	static std::map<std::string, eOperandType> types = {
+		{ "int8",	Int8 },
+		{ "int16",	Int16 },
+		{ "int32",	Int32 },
+		{ "float",	Float },
+		{ "double",	Double }
+	};
+
 	int			del		= l.find(" ");
 	std::string	token	= l.substr(0, del);
 
@@ -80,7 +89,27 @@ void Parser::acquireLine (std::string & l) const
 		Vm::single().pushInstruction(basicInstr[token]);
 	}
 	else if (complexInstr[token]) {
-		std::cout << "complex token [" << token << "]" << std::endl;
+		if (del == -1) { throw Parser::BadInstructionException(); }
+		++del;
+		l.erase(0, del);
+		del = l.find("(");
+		if (del == -1) { throw Parser::BadInstructionException(); }
+		std::string type = l.substr(0, del);
+		if (!(types[type])) { throw Parser::UnknownTypeException(); }
+		l.erase(0, del + 1);
+		if (l[l.size() - 1] != ')') { throw Parser::BadInstructionException(); }
+		token = l.substr(0, l.size() - 1);
+
+		if (type == "float" || type == "double") {
+			if (!std::regex_match(token, std::regex("[-]?[0-9]+\\.[0-9]+"))) {
+				throw Parser::BadInstructionException();
+			}
+		}
+		else if (!std::regex_match(token, std::regex("[-]?[0-9]+"))) {
+			throw Parser::BadInstructionException();
+		}
+
+		Vm::single().pushInstruction(complexInstr[type], token);
 	}
 	else { throw Parser::UnknownInstructionException(); }
 }

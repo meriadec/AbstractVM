@@ -65,6 +65,13 @@ class Parser {
 			}
 		};
 
+		class UnknownTypeException : public SyntaxException {
+			virtual const char * what (void) const throw ()
+			{
+				return "unknown type";
+			}
+		};
+
 		/**
 		 * Parsing
 		 */
