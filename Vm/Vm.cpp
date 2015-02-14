@@ -47,6 +47,9 @@ void Vm::execute (void)
 			IOperand const * op = this->createOperand(inst->type, inst->param);
 			(this->*(inst->complexIn))(op);
 		}
+		if (it == std::prev(this->_instructions.end()) && inst->basicIn != &Vm::exit) {
+			throw Vm::NoExitException();
+		}
 		this->incLine();
 		++it;
 	}
@@ -184,7 +187,8 @@ void Vm::print (void)
  */
 void Vm::exit (void)
 {
-	std::cout << "Exiting this shit." << std::endl;
+	// lol
+	throw AllIsOkException();
 }
 
 /**

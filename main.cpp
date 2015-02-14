@@ -52,6 +52,7 @@ int main (int ac, char ** av)
 		vm.execute();
 
 	}
+	catch (AllIsOkException & e)   {}
 	catch (SyntaxException & e)    { display_err("Syntax Error", e, true); }
 	catch (ExecutionException & e) { display_err("Execution Error", e, true); }
 	catch (std::exception & e)     { display_err("Error", e, false); }

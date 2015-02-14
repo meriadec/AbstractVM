@@ -18,6 +18,7 @@
  * Exceptions
  */
 
+class AllIsOkException   : public std::exception {};
 class SyntaxException    : public std::exception {};
 class ExecutionException : public std::exception {};
 

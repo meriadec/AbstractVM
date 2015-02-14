@@ -133,6 +133,13 @@ class Vm {
 			}
 		};
 
+		class NoExitException : public ExecutionException {
+			virtual const char * what (void) const throw ()
+			{
+				return "no exit instruction";
+			}
+		};
+
 };
 
 #endif
