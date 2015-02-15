@@ -23,11 +23,11 @@ int usage (char * name)
 
 void display_err (std::string type, std::exception & e, bool line)
 {
-	std::cout << "\033[31m" << type << ": " << "\033[0m";
+	std::cout << "\033[31m" << type << ": " << "\033[34m";
 	if (line) {
 		std::cout << "Line " << Vm::single().getLine() << ": ";
 	}
-	std::cout << e.what() << std::endl;
+	std::cout << "\033[0m" << e.what() << std::endl;
 }
 
 int main (int ac, char ** av)
