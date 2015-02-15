@@ -32,10 +32,11 @@ class Parser {
 		void parse (T & stream) const
 		{
 			std::string		line;
+			unsigned int	i = 1;
 
 			while (getline(stream, line) && line != ";;") {
-				this->acquireLine(line);
-				Vm::single().incLine();
+				this->acquireLine(line, i);
+				++i;
 			}
 		}
 
@@ -75,7 +76,7 @@ class Parser {
 		/**
 		 * Parsing
 		 */
-		void	acquireLine		(std::string & line) const;
+		void	acquireLine		(std::string & line, unsigned int i) const;
 		bool	isUseless		(std::string & line) const;
 
 };

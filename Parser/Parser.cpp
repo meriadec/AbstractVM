@@ -52,7 +52,7 @@ void Parser::parseFromFile (char * filename) const
 /**
  * Parsing one single line
  */
-void Parser::acquireLine (std::string & l) const
+void Parser::acquireLine (std::string & l, unsigned int num) const
 {
 	if (this->isUseless(l)) { return; }
 
@@ -86,7 +86,7 @@ void Parser::acquireLine (std::string & l) const
 
 	if (basicInstr[token]) {
 		if (del != -1) { throw Parser::BadInstructionException(); }
-		Vm::single().pushInstruction(basicInstr[token]);
+		Vm::single().pushInstruction(basicInstr[token], num);
 	}
 	else if (complexInstr[token]) {
 		std::string instr = token;
@@ -110,7 +110,7 @@ void Parser::acquireLine (std::string & l) const
 			throw Parser::BadInstructionException();
 		}
 
-		Vm::single().pushInstruction(types[type], complexInstr[instr], token);
+		Vm::single().pushInstruction(types[type], complexInstr[instr], token, num);
 	}
 	else { throw Parser::UnknownInstructionException(); }
 }

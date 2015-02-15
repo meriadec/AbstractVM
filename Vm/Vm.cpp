@@ -46,6 +46,7 @@ void Vm::execute (void)
 	std::list<Instruction const *>::const_iterator it = this->_instructions.begin();
 	while (it != this->_instructions.end()) {
 		Instruction const * inst = *it;
+		this->setLine(inst->num);
 		if (inst->basicIn) {
 			(this->*(inst->basicIn))();
 		}
@@ -56,7 +57,6 @@ void Vm::execute (void)
 		if (it == std::prev(this->_instructions.end()) && inst->basicIn != &Vm::exit) {
 			throw Vm::NoExitException();
 		}
-		this->incLine();
 		++it;
 	}
 }
@@ -64,6 +64,11 @@ void Vm::execute (void)
 unsigned int Vm::getLine (void) const
 {
 	return this->_line;
+}
+
+void Vm::setLine (unsigned int num)
+{
+	this->_line = num;
 }
 
 void Vm::incLine (void)
@@ -275,14 +280,14 @@ void Vm::mod (void)
 /**
  * Push instruction
  */
-void Vm::pushInstruction (basicInType fn)
+void Vm::pushInstruction (basicInType fn, int num)
 {
-	Instruction const * inst = new Instruction(fn);
+	Instruction const * inst = new Instruction(fn, num);
 	this->_instructions.push_back(inst);
 }
 
-void Vm::pushInstruction (eOperandType type, complexInType fn, std::string param)
+void Vm::pushInstruction (eOperandType type, complexInType fn, std::string param, int num)
 {
-	Instruction const * inst = new Instruction(type, fn, param);
+	Instruction const * inst = new Instruction(type, fn, param, num);
 	this->_instructions.push_back(inst);
 }

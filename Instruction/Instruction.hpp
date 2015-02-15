@@ -18,14 +18,15 @@ class Instruction {
 
 	public:
 
-		Instruction		(basicInType);
-		Instruction		(eOperandType type, complexInType fn, std::string param);
+		Instruction		(basicInType, unsigned int num);
+		Instruction		(eOperandType type, complexInType fn, std::string param, unsigned int num);
 		~Instruction	(void);
 
 		basicInType				basicIn;
 		complexInType			complexIn;
 		std::string				param;
 		eOperandType			type;
+		unsigned int			num;
 
 	private:
 

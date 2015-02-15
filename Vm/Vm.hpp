@@ -37,6 +37,11 @@ class Vm {
 		unsigned int getLine (void) const;
 
 		/**
+		 * Set current line
+		 */
+		void setLine (unsigned int);
+
+		/**
 		 * Increment current line
 		 */
 		void incLine (void);
@@ -100,8 +105,8 @@ class Vm {
 		/**
 		 * Push instruction
 		 */
-		void pushInstruction (basicInType);
-		void pushInstruction (eOperandType, complexInType, std::string);
+		void pushInstruction (basicInType, int num);
+		void pushInstruction (eOperandType, complexInType, std::string, int num);
 
 	private:
 
