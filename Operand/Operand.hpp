@@ -38,7 +38,7 @@ class Operand : public IOperand {
 
 			if (type == Int8) {
 				if (d > 128) { throw Operand::OverflowException(); }
-				if (d < -128) { throw Operand::UnderflowException(); }
+				if (d < -127) { throw Operand::UnderflowException(); }
 			}
 			else if (d > std::numeric_limits<T>::max()) { throw Operand::OverflowException(); }
 			else if (d < std::numeric_limits<T>::lowest()) { throw Operand::UnderflowException(); }
