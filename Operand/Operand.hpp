@@ -36,6 +36,10 @@ class Operand : public IOperand {
 			ss << value;
 			ss >> d;
 
+			if (ss.fail()) {
+				throw Operand::BadValueException();
+			}
+
 			if (type == Int8) {
 				if (d > 127) { throw Operand::OverflowException(); }
 				if (d < -128) { throw Operand::UnderflowException(); }
@@ -222,6 +226,13 @@ class Operand : public IOperand {
 			virtual const char * what (void) const throw ()
 			{
 				return "modulo by zero is forbidden";
+			}
+		};
+
+		class BadValueException: public ExecutionException {
+			virtual const char * what (void) const throw ()
+			{
+				return "bad value";
 			}
 		};
 
