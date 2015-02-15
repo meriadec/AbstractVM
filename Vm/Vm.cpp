@@ -224,7 +224,7 @@ void Vm::sub (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	IOperand const * res = *op1 - *op2;
+	IOperand const * res = *op2 - *op1;
 	this->pop();
 	this->pop();
 	this->push(res);
@@ -252,7 +252,7 @@ void Vm::div (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	IOperand const * res = *op1 / *op2;
+	IOperand const * res = *op2 / *op1;
 	this->pop();
 	this->pop();
 	this->push(res);
@@ -266,7 +266,7 @@ void Vm::mod (void)
 	if (this->_stack.size() < 2) { throw Vm::NotEnoughElementsException(); }
 	IOperand const * op1 = *(this->_stack.begin());
 	IOperand const * op2 = *(std::next(this->_stack.begin()));
-	IOperand const * res = *op1 % *op2;
+	IOperand const * res = *op2 % *op1;
 	this->pop();
 	this->pop();
 	this->push(res);
