@@ -24,6 +24,7 @@ class Vm {
 	public:
 
 		static Vm & single (void);
+		bool readFile;
 
 		Vm	(void);
 		Vm	(Vm const & ref);

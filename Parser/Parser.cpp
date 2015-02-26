@@ -38,12 +38,14 @@ Parser & Parser::operator= (Parser const & ref)
 
 int Parser::parseFromStdin (void) const
 {
+	Vm::single().readFile = false;
 	return this->parse<std::istream>(std::cin);
 }
 
 int Parser::parseFromFile (char * filename) const
 {
 	int ret = 0;
+	Vm::single().readFile = true;
 	std::ifstream file(filename);
 	if (!file.is_open()) { throw Parser::BadFileException(); }
 	ret = this->parse<std::ifstream>(file);
