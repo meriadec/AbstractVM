@@ -29,19 +29,26 @@ class Parser {
 		Parser & operator= (Parser const & ref);
 
 		template<typename T>
-		void parse (T & stream) const
+		int parse (T & stream) const
 		{
 			std::string		line;
 			unsigned int	i = 1;
+			int				ret = 0;
 
 			while (getline(stream, line) && line != ";;") {
-				this->acquireLine(line, i);
+				try {
+					this->acquireLine(line, i);
+				} catch (SyntaxException & e) {
+					display_err("Syntax Error", e, true);
+					ret = 1;
+				}
 				++i;
 			}
+			return ret;
 		}
 
-		void parseFromStdin	(void) const;
-		void parseFromFile	(char * file) const;
+		int parseFromStdin	(void) const;
+		int parseFromFile	(char * file) const;
 
 	private:
 

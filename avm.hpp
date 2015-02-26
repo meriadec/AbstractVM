@@ -18,6 +18,8 @@
  * Exceptions
  */
 
+void display_err (std::string type, std::exception & e, bool line);
+
 class AllIsOkException   : public std::exception {};
 class SyntaxException    : public std::exception {};
 class ExecutionException : public std::exception {};

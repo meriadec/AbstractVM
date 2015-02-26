@@ -41,19 +41,22 @@ int main (int ac, char ** av)
 
 	try {
 
+		int ret = 0;
+
 		vm.resetLine();
 
 		if (ac == 1) {
-			parser.parseFromStdin();
+			ret = parser.parseFromStdin();
 		} else {
-			parser.parseFromFile(av[1]);
+			ret = parser.parseFromFile(av[1]);
 		}
 
-		vm.execute();
+		if (ret == 0) {
+			vm.execute();
+		}
 
 	}
-	catch (AllIsOkException & e)   {}
-	catch (SyntaxException & e)    { display_err("Syntax Error", e, true); }
+	catch (AllIsOkException & e)   { static_cast<void>(e); }
 	catch (ExecutionException & e) { display_err("Execution Error", e, true); }
 	catch (std::exception & e)     { display_err("Error", e, false); }
 

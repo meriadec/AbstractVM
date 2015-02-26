@@ -36,17 +36,19 @@ Parser & Parser::operator= (Parser const & ref)
 	return *this;
 }
 
-void Parser::parseFromStdin (void) const
+int Parser::parseFromStdin (void) const
 {
-	this->parse<std::istream>(std::cin);
+	return this->parse<std::istream>(std::cin);
 }
 
-void Parser::parseFromFile (char * filename) const
+int Parser::parseFromFile (char * filename) const
 {
+	int ret = 0;
 	std::ifstream file(filename);
 	if (!file.is_open()) { throw Parser::BadFileException(); }
-	this->parse<std::ifstream>(file);
+	ret = this->parse<std::ifstream>(file);
 	file.close();
+	return ret;
 }
 
 /**
@@ -55,8 +57,9 @@ void Parser::parseFromFile (char * filename) const
 void Parser::acquireLine (std::string & l, unsigned int num) const
 {
 	if (this->isUseless(l)) { return; }
+	Vm::single().setLine(num);
 
-	static std::map<std::string, basicInType> basicInstr = {
+	std::map<std::string, basicInType> basicInstr = {
 		{ "pop",	&Vm::pop },
 		{ "dump",	&Vm::dump },
 		{ "add",	&Vm::add },
@@ -68,12 +71,12 @@ void Parser::acquireLine (std::string & l, unsigned int num) const
 		{ "exit",	&Vm::exit }
 	};
 
-	static std::map<std::string, complexInType> complexInstr = {
+	std::map<std::string, complexInType> complexInstr = {
 		{ "push",	&Vm::push },
 		{ "assert",	&Vm::assert }
 	};
 
-	static std::map<std::string, eOperandType> types = {
+	std::map<std::string, eOperandType> types = {
 		{ "int8",	Int8 },
 		{ "int16",	Int16 },
 		{ "int32",	Int32 },
