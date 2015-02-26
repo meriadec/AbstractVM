@@ -18,6 +18,7 @@
 # include <sstream>
 # include <cstdint>
 # include <math.h>
+# include <limits>
 
 template<typename T>
 class Operand : public IOperand {
