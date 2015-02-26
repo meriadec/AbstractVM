@@ -35,7 +35,7 @@ class Parser {
 			unsigned int	i = 1;
 			int				ret = 0;
 
-			while (getline(stream, line) && line != ";;") {
+			while (getline(stream, line) && (Vm::single().readFile || line != ";;")) {
 				try {
 					this->acquireLine(line, i);
 				} catch (SyntaxException & e) {
