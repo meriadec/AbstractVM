@@ -1,0 +1,20 @@
+push int8(127)
+push int16(42)
+push int32(33)
+push float(5757.202)
+push double(205.2)
+push int8(20)
+push int32(202)
+push float(572.2007)
+
+add
+mul
+div
+mod
+sub
+add
+mul
+
+dump
+
+exit
